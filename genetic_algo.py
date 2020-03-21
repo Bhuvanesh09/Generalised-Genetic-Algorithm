@@ -40,11 +40,11 @@ class GeneticAlgo:
     Date: 21/3/20
     """
     
-    def __init__(self, param_range, num_params, pop_size, num_gen, fitnessFunc):
+    def __init__(self, param_range, num_params, pop_size, mutation_prob, fitnessFunc):
         self.param_range = param_range
         self.num_params = num_params
         self.pop_size = pop_size
-        self.num_gen = num_gen
+        self.mutation_prob = mutation_prob
         self.population = None
         self.fitnessFunc = fitnessFunc
     
@@ -120,7 +120,7 @@ class GeneticAlgo:
         for i in range(0, parent_ind.size, 2):
             pop = np.concatenate((pop, self.breed_parents(0.3, pop[i], pop[i+1])))
             
-        self.mutate(pop, 0.3, 1)
+        self.mutate(pop, self.mutation_prob, 1)
         
         fitness = self.calc_fitness(pop)
         self.population = self.rank_selection(pop, fitness, self.pop_size)
